@@ -1,3 +1,5 @@
+console.log('loaded index.js 3')
+
 require('../css/style.css');
 
 const elImg = document.createElement('img');
@@ -9,7 +11,7 @@ document.body.appendChild(elImg);
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     const prefix = location.pathname.replace(/\/(index\.html)?$/, '');
-    navigator.serviceWorker.register(`${prefix}/build.sw.js`)
+    navigator.serviceWorker.register(`${prefix}/sw.js`)
       .then(function(registration) {
         // Registration was successful
         console.log('[success] scope: ', registration.scope);
