@@ -10,6 +10,13 @@ workbox.routing.registerRoute(
   })
 );
 
+workbox.routing.registerRoute(
+  /\/$/,
+  workbox.strategies.networkFirst({
+    cacheName: 'workbox:html',
+  })
+);
+
 // JS 请求: 网络优先
 workbox.routing.registerRoute(
   new RegExp('.*\.js'),
