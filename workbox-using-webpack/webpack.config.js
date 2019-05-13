@@ -46,7 +46,7 @@ module.exports = {
       importWorkboxFrom: "local", // workbox-sw.js 部署本地服务器
       cacheId: "arnoo",
       // 以下文件不会在`预缓存`中(arnoo-precache-v2)
-      exclude: [/\.map$/, /\.html$/],
+      exclude: [/\.map$/, /\.html$/], // 修改index.html, 再运行 npm run build
       // `运行时缓存`(arnoo-runtime)
       // https://developers.google.com/web/tools/workbox/reference-docs/latest/workbox.strategies#methods
       runtimeCaching: [
