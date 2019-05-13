@@ -40,7 +40,7 @@ if ('serviceWorker' in navigator) {
         // 获取当前页面URL + 页面加载的所有资源。
         const urlsToCache = [
           window.location.href,
-          ...performance.getEntriesByType('resource').map((r) => r.name),
+          ...window.performance.getEntriesByType('resource').map((r) => r.name),
         ];
         // 将该URL列表发送到 serviceWorker 的路由器。
         wb.messageSW({
