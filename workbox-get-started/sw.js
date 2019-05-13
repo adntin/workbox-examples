@@ -1,4 +1,4 @@
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0/workbox-sw.js');
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
 // 主文档: 网络优先
 // https://developers.google.com/web/tools/workbox/reference-docs/latest/workbox.routing#registerRoute
@@ -10,8 +10,10 @@ workbox.routing.registerRoute(
   })
 );
 
+// 主文档: 网络优先
 workbox.routing.registerRoute(
   /\/$/,
+  // 直接改, 马上生效
   workbox.strategies.networkFirst({
     cacheName: 'workbox:html',
   })
@@ -20,6 +22,7 @@ workbox.routing.registerRoute(
 // JS 请求: 网络优先
 workbox.routing.registerRoute(
   new RegExp('.*\.js'),
+  // 直接改, 马上生效
   workbox.strategies.networkFirst({
     cacheName: 'workbox:js',
   })
@@ -27,29 +30,22 @@ workbox.routing.registerRoute(
 
 // CSS 请求: 缓存优先，同时后台更新后下次打开页面才会被页面使用
 workbox.routing.registerRoute(
-  // Cache CSS files
   /.*\.css/,
-  // Use cache but update in the background ASAP
+  // 直接改, 代码生效, 需要再次刷新才生效
   workbox.strategies.staleWhileRevalidate({
-    // Use a custom cache name
     cacheName: 'workbox:css',
   })
 );
 
 // 图片请求: 缓存优先
 workbox.routing.registerRoute(
-  // Cache image files
   /.*\.(?:png|jpg|jpeg|svg|gif)/,
-  // Use the cache if it's available
   workbox.strategies.cacheFirst({
-    // Use a custom cache name
     cacheName: 'workbox:image',
     plugins: [
       new workbox.expiration.Plugin({
-        // Cache only 20 images
-        maxEntries: 20,
-        // Cache for a maximum of a week
-        maxAgeSeconds: 7 * 24 * 60 * 60,
+        maxEntries: 20, // Cache only 20 images
+        maxAgeSeconds: 7 * 24 * 60 * 60, // Cache for a maximum of a week
       })
     ],
   })

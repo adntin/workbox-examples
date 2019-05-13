@@ -13,4 +13,4 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-console.log('index.js modified');
+console.log('index.js modified 1');
