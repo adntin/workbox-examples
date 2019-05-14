@@ -51,13 +51,13 @@ module.exports = {
       // https://developers.google.com/web/tools/workbox/reference-docs/latest/workbox.strategies#methods
       runtimeCaching: [
         {
-          urlPattern: /index\.html/, // 注意: index.html一定是网络优先, 如果此文件被缓存, 之后就没法更新了.
-          handler: "networkFirst" // 网络优先, 如果离线, 则用缓存.
+          urlPattern: /(\/$|index\.html)/, // 注意: index.html一定是网络优先, 如果此文件被缓存, 之后就没法更新了.
+          handler: "networkFirst", // 网络优先, 如果离线, 则用缓存.
+          options: {
+            // Fall back to the cache after 2 seconds.
+            networkTimeoutSeconds: 2,
+          }
         },
-        {
-          urlPattern: "/",
-          handler: "networkFirst"
-        }
         // 因为我们是根据hash生成文件名, 不可能重复, 所以不需要在运行时缓存
         // {
         //   urlPattern: /\.(js|css|png|jpg|gif|svg)/,

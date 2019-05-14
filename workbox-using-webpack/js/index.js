@@ -34,22 +34,26 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     const wb = new Workbox('/sw.js');
 
+    wb.addEventListener('installed', (event) => {
+      console.log('Service worker installed!');
+    });
+
     wb.addEventListener('activated', (event) => {
-      if (!event.isUpdate) {
-        console.log('Service worker 第一次激活！');
-        // 获取当前页面URL + 页面加载的所有资源。
-        const urlsToCache = [
-          window.location.href,
-          ...window.performance.getEntriesByType('resource').map((r) => r.name),
-        ];
-        // 将该URL列表发送到 serviceWorker 的路由器。
-        wb.messageSW({
-          type: 'CACHE_URLS',
-          payload: {urlsToCache},
-        });
-      }
+      console.log('Service worker activated!');
+      // 获取当前页面URL + 页面加载的所有资源
+      const urlsToCache = [
+        window.location.href,
+        ...window.performance.getEntriesByType('resource').map((r) => r.name),
+      ];
+      // 将该URL列表发送到 serviceWorker 的路由器
+      wb.messageSW({
+        type: 'CACHE_URLS',
+        payload: {urlsToCache},
+      });
     });
 
     wb.register();
   });
+} else {
+  console.error('Service worker is not supported!', window.navigator.userAgent);
 }
