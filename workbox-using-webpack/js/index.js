@@ -31,17 +31,15 @@ document.body.appendChild(elImg);
 // }
 
 if ('serviceWorker' in navigator) {
-  // console.info('Service worker is supported!', navigator.userAgent);
-
   window.addEventListener('load', function() {
     const wb = new Workbox('/sw.js');
 
     wb.addEventListener('installed', (event) => {
-      // console.log('Service worker installed!');
+      console.log('Service worker installed!');
     });
 
     wb.addEventListener('activated', (event) => {
-      // console.log('Service worker activated!');
+      console.log('Service worker activated!');
       // 获取当前页面URL + 页面加载的所有资源
       const urlsToCache = [
         window.location.href,
@@ -52,6 +50,10 @@ if ('serviceWorker' in navigator) {
         type: 'CACHE_URLS',
         payload: {urlsToCache},
       });
+    });
+
+    wb.addEventListener('controlling', (event) => {
+      console.log('Service worker controlling!');
     });
 
     wb.register().catch((error) => {

@@ -48,8 +48,9 @@ module.exports = {
       cacheId: "arnoo",
       // 以下文件不会在`预缓存`中(arnoo-precache-v2)
       exclude: [/\.map$/, /\.html$/], // 修改index.html, 再运行 npm run build
+      skipWaiting: true, // 客户端(浏览器)每次只能运行一个网站版本, 调用 self.skipWaiting() 尽快将新 Service Worker 激活, 从 waiting 状态直接跳到 activated 状态
+      clientsClaim: true, // 控制未受控制的客户端(浏览器), 在 activated 事件中调用 clients.claim(), 之后所有的请求都会通过 fetch 事件拦截
       // `运行时缓存`(arnoo-runtime)
-      // https://developers.google.com/web/tools/workbox/reference-docs/latest/workbox.strategies#methods
       runtimeCaching: [
         {
           urlPattern: /(\/$|index\.html)/, // 注意: index.html一定是网络优先, 如果此文件被缓存, 之后就没法更新了.
