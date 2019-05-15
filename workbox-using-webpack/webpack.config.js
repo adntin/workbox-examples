@@ -53,7 +53,7 @@ module.exports = {
       runtimeCaching: [
         {
           urlPattern: /(\/$|index\.html)/, // 注意: index.html一定是网络优先, 如果此文件被缓存, 之后就没法更新了.
-          handler: "networkFirst", // 网络优先, 如果离线, 则用缓存.
+          handler: "NetworkFirst", // 网络优先, 如果离线, 则用缓存.
           options: {
             // Fall back to the cache after 2 seconds.
             networkTimeoutSeconds: 2,
