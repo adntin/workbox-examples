@@ -8,15 +8,16 @@ const workboxPlugin = require("workbox-webpack-plugin");
 const DIST = path.join(__dirname, "dist");
 
 module.exports = {
-  mode: "production",
+  mode: "development",// production
   entry: "./js/index.js",
   output: {
     filename: "index.[chunkhash:5].js",
     path: DIST
   },
-  optimization: {
-    minimize: false
-  },
+  devtool: 'cheap-module-source-map',
+  // optimization: {
+  //   minimize: false
+  // },
   module: {
     rules: [
       {

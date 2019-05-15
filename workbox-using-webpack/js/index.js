@@ -2,12 +2,12 @@ console.log('loaded index.js 1')
 
 // 1. 使用ES5语法导入UMD版本
 // (pkg.main: "build/workbox-window.prod.umd.js")
-const { Workbox } = require('workbox-window');
+// const { Workbox } = require('workbox-window');
 // 2. 使用ES5语法导入模块版本
 // (pkg.module: "build/workbox-window.prod.es5.mjs")
 // import { Workbox } from 'workbox-window';
-// 3. 使用ES2015 + 语法导入模块源文件
-// import { Workbox } from 'workbox-window/Workbox.mjs';
+// 3. 使用ES2015 + 语法导入模块源文件(调试)
+import { Workbox } from 'workbox-window/Workbox.mjs';
 
 require('../css/style.css');
 
@@ -31,15 +31,17 @@ document.body.appendChild(elImg);
 // }
 
 if ('serviceWorker' in navigator) {
+  // console.info('Service worker is supported!', navigator.userAgent);
+
   window.addEventListener('load', function() {
     const wb = new Workbox('/sw.js');
 
     wb.addEventListener('installed', (event) => {
-      console.log('Service worker installed!');
+      // console.log('Service worker installed!');
     });
 
     wb.addEventListener('activated', (event) => {
-      console.log('Service worker activated!');
+      // console.log('Service worker activated!');
       // 获取当前页面URL + 页面加载的所有资源
       const urlsToCache = [
         window.location.href,
@@ -52,8 +54,13 @@ if ('serviceWorker' in navigator) {
       });
     });
 
-    wb.register();
+    wb.register().catch((error) => {
+      // file:///Users/devin/Desktop/xxx/dist/index.html
+      // 必须是https协议
+      // "SecurityError: Failed to register a ServiceWorker: The URL protocol of the current origin ('null') is not supported."
+      console.log('Service worker register failure:', error.toString());
+    });
   });
 } else {
-  console.error('Service worker is not supported!', window.navigator.userAgent);
+  console.error('Service worker is not supported!', navigator.userAgent);
 }
